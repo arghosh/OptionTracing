@@ -10,7 +10,7 @@ torch==1.7.1
 ```
 
 ## Training
-I added sample datasets in the `data/` folder. Download the full preprocessed Ednet and Eedi (renamed as Coda) dataset from [Google Drive](). 
+I added sample datasets in the `data/` folder. Download the full preprocessed Ednet and Eedi (renamed as Coda) dataset from [Google Drive](https://drive.google.com/file/d/1sPBGd6atvseSvr7rqzuexWitQk_TrVM1/view?usp=sharing). 
 
 ```(bash)
 python {train_file}\
