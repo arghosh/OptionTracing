@@ -56,6 +56,28 @@ hyperparameters = [
 ]
 ```
 
+## Data Format
+There are four partitions for each student's sequential response. This is a rather unfortunate name: `test_mask` for a single time step is 0 if the answer is unobserved (happens in some dataset) or that time step is a padding time step (to make all student's length same); otherwise, `test_mask` is 1. `valid_mask` for a single time step is 0 if that timestep is part of validation set. `local_test_mask` for a single time step is 0 if that timestep is part of the Test set. Thus, training is done over `test_mask*valid_mask*local_test_mask` that denotes not padding timepoint, not validation timepoint, not testing timepoint.
+
+```(bash)
+data = open_json(data/cf_coda.json)`: List(Dict), a list of student response data.
+
+data[idx]: Dict, a single student's  sequential response data. Example:
+{
+`user_id`: 1,# Id of the user
+`subject_ids`: [[5], [2,3], [4], [2], [0]],# List(List(subject ids))
+`q_ids`:[1,2,3,4,0], #List(int), question indices
+`correct_ans`: [0,1,2,3,0], #List(int), correct options
+`ans`:[0,1,3,0,0],#List(int), #List(int), student answeres
+`labels`:[1,1,0,0,0], #List(int), binary correctness
+`test_mask`: [1,1,1,1,0] #List(int), 0 if unknown (due to padding or unobserved)
+# These two are generated in the script.
+'valid_mask`:[0,1,1,1,1], #List(int), 0 if it is part of validation set
+'local_test_mask`: [1,0,1,1,1] #List(int), 0 if it is part of test set
+}
+
+```
+
 
 ## Citation
 If you find this code useful in your research then please cite  
